@@ -40,11 +40,8 @@ function swapOptions(options) {
     const j = Math.floor(Math.random() * i);
     [options[i], options[j]] = [options[j], options[i]];
   }
-
   // basic swapping logic
   // [options[3], options[0]] = [options[0], options[3]];
   console.log(options);
   return options;
 }
-
-// swapOptions([1, 2, 3, 4, 5]);
