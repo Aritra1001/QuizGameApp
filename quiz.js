@@ -15,7 +15,8 @@ let score = 0; // score var to count the score on the fly.
 questionEl.textContent = questionObj.question;
 
 //rendering the options
-questionObj.options.forEach((_option) => {
+let swappedOptions = swapOptions(questionObj.options);
+swappedOptions.forEach((_option) => {
   const btnEl = document.createElement("button");
   btnEl.textContent = _option;
   optionEl.appendChild(btnEl);
@@ -32,3 +33,18 @@ questionObj.options.forEach((_option) => {
     optionEl.textContent = "";
   });
 });
+
+// swapping of the options
+function swapOptions(options) {
+  for (let i = options.length - 1; i >= 0; i--) {
+    const j = Math.floor(Math.random() * i);
+    [options[i], options[j]] = [options[j], options[i]];
+  }
+
+  // basic swapping logic
+  // [options[3], options[0]] = [options[0], options[3]];
+  console.log(options);
+  return options;
+}
+
+// swapOptions([1, 2, 3, 4, 5]);
