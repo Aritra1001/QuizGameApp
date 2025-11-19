@@ -1,38 +1,90 @@
-const questionObj = {
-  category: "Food & Drink",
-  id: "qa-1",
-  correctAnswer: "Three",
-  options: ["Two", "Three", "Four", "Five"],
-  question: "How many pieces of bun are in a Mcdonald's Big Mac?",
-};
+const quesJSON = [
+  {
+    correctAnswer: "Three ",
+    options: ["Two", "Three ", "Four", "Five"],
+    question: "How many pieces of bun are in a Mcdonald's Big Mac?",
+  },
+  {
+    correctAnswer: "L. Frank Baum",
+    options: [
+      "Suzanne Collins",
+      "James Fenimore Cooper",
+      "L. Frank Baum",
+      "Donna Leon",
+    ],
+    question: "Which author wrote 'The Wonderful Wizard of Oz'?",
+  },
+  {
+    correctAnswer: "Atlanta United",
+    options: [
+      "Atlanta United",
+      "Atlanta Impact",
+      "Atlanta Bulls",
+      "Atlanta Stars",
+    ],
+    question: "Which of these is a soccer team based in Atlanta?",
+  },
+  {
+    correctAnswer: "A Nanny",
+    options: ["A Sow", "A Lioness", "A Hen", "A Nanny"],
+    question: "A female goat is known as what?",
+  },
+  {
+    correctAnswer: "P. L. Travers",
+    options: [
+      "J. R. R. Tolkien",
+      "P. L. Travers",
+      "Lewis Carroll",
+      "Enid Blyton",
+    ],
+    question: "Which author wrote 'Mary Poppins'?",
+  },
+];
+
+let score = 0; // score var to count the score on the fly.
+let currentQuestion = 0;
 
 const questionEl = document.getElementById("question");
 const optionEl = document.getElementById("options");
 const scoreEl = document.getElementById("score");
-let score = 0; // score var to count the score on the fly.
+renderQuestions();
 
-// rendering the question.
-questionEl.textContent = questionObj.question;
+function renderQuestions() {
+  const { correctAnswer, options, question } = quesJSON[currentQuestion];
 
-//rendering the options
-let swappedOptions = swapOptions(questionObj.options);
-swappedOptions.forEach((_option) => {
-  const btnEl = document.createElement("button");
-  btnEl.textContent = _option;
-  optionEl.appendChild(btnEl);
+  // rendering the question.
+  questionEl.textContent = question;
+  //rendering the options
+  let swappedOptions = swapOptions(options);
+  swappedOptions.forEach((_option) => {
+    const btnEl = document.createElement("button");
+    btnEl.textContent = _option;
+    optionEl.appendChild(btnEl);
 
-  //event handling on the button
-  btnEl.addEventListener("click", () => {
-    if (_option === questionObj.correctAnswer) {
-      score++;
-    } else {
-      score = score - 0.25;
-    }
-    scoreEl.textContent = `Score: ${score}`;
+    //event handling on the button
+    btnEl.addEventListener("click", () => {
+      if (_option === correctAnswer) {
+        score++;
+      } else {
+        score = score - 0.25;
+      }
+      scoreEl.textContent = `Score: ${score}`;
+
+      nextQuestion();
+    });
+  });
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  optionEl.textContent = "";
+  if (currentQuestion >= quesJSON.length) {
     questionEl.textContent = "Quiz Completed";
     optionEl.textContent = "";
-  });
-});
+  } else {
+    renderQuestions();
+  }
+}
 
 // swapping of the options
 function swapOptions(options) {
