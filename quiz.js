@@ -47,6 +47,12 @@ let currentQuestion = 0;
 const questionEl = document.getElementById("question");
 const optionEl = document.getElementById("options");
 const scoreEl = document.getElementById("score");
+const nextBtn = document.getElementById("next");
+nextBtn.addEventListener("click", () => {
+  scoreEl.textContent = `Score: ${score} / ${quesJSON.length}`;
+  nextQuestion();
+});
+
 renderQuestions();
 
 function renderQuestions() {
@@ -68,7 +74,7 @@ function renderQuestions() {
       } else {
         score = score - 0.25;
       }
-      scoreEl.textContent = `Score: ${score}`;
+      scoreEl.textContent = `Score: ${score} / ${quesJSON.length}`;
 
       nextQuestion();
     });
@@ -81,6 +87,7 @@ function nextQuestion() {
   if (currentQuestion >= quesJSON.length) {
     questionEl.textContent = "Quiz Completed";
     optionEl.textContent = "";
+    nextBtn.remove();
   } else {
     renderQuestions();
   }
@@ -94,6 +101,5 @@ function swapOptions(options) {
   }
   // basic swapping logic
   // [options[3], options[0]] = [options[0], options[3]];
-  console.log(options);
   return options;
 }
